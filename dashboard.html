@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrintShop Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">🖨️ <span>PrintShop</span></div>
+    <div class="brand-sub">Dashboard</div>
+    <nav>
+      <button class="nav-item active" data-section="overview">🏠 Overview</button>
+      <button class="nav-item" data-section="orders">📋 Orders</button>
+      <button class="nav-item" data-section="printer">🖨️ Printer</button>
+      <button class="nav-item" data-section="settings">⚙️ Settings</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="connection-dot"><span id="connectionDot"></span> <span id="connectionText">Connecting...</span></div>
+      <small>PrintShop Dashboard v1</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">SHOP CONTROL CENTER</p>
+        <h1 id="pageTitle">Overview</h1>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" id="notificationBtn" title="Notifications">🔔 <span id="notificationCount">0</span></button>
+        <button class="shop-status online" id="shopStatusBtn"><span class="status-dot"></span><span id="shopStatusText">ONLINE</span></button>
+      </div>
+    </header>
+
+    <section id="overview" class="section active">
+      <div class="hero-card">
+        <div>
+          <p class="eyebrow">TODAY</p>
+          <h2>Welcome to your PrintShop 👋</h2>
+          <p>Manage orders, prices, shop status and printer connection from one place.</p>
+        </div>
+        <div class="hero-icon">🖨️</div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card"><span>🟡 Pending</span><strong id="pendingCount">0</strong><small>Orders waiting</small></div>
+        <div class="stat-card"><span>🖨️ Printing</span><strong id="printingCount">0</strong><small>In progress</small></div>
+        <div class="stat-card"><span>✅ Completed</span><strong id="completedCount">0</strong><small>Finished orders</small></div>
+        <div class="stat-card"><span>💰 Revenue</span><strong id="revenue">₹0</strong><small>Demo total</small></div>
+      </div>
+
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-head"><h3>Recent Orders</h3><button class="text-btn" data-go="orders">View all →</button></div>
+          <div id="recentOrders" class="order-list"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Quick Controls</h3></div>
+          <div class="quick-controls">
+            <button class="control-card" id="quickOnline">🟢<b>Shop Online</b><small>Accept new orders</small></button>
+            <button class="control-card" data-go="settings">💰<b>Change Prices</b><small>B/W & Colour</small></button>
+            <button class="control-card" data-go="printer">🖨️<b>Printer</b><small>Check connection</small></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="orders" class="section">
+      <div class="section-head">
+        <div><p class="eyebrow">ORDER MANAGEMENT</p><h2>Orders</h2></div>
+        <button class="secondary-btn" id="refreshOrders">↻ Refresh</button>
+      </div>
+      <div class="filters">
+        <button class="filter active" data-filter="all">All</button>
+        <button class="filter" data-filter="pending">Pending</button>
+        <button class="filter" data-filter="printing">Printing</button>
+        <button class="filter" data-filter="completed">Completed</button>
+        <button class="filter" data-filter="rejected">Rejected</button>
+      </div>
+      <div id="ordersList" class="order-list large"></div>
+    </section>
+
+    <section id="printer" class="section">
+      <div class="section-head">
+        <div><p class="eyebrow">PRINT STATION</p><h2>Printer & Computer</h2></div>
+      </div>
+      <div class="printer-grid">
+        <div class="panel printer-main">
+          <div class="printer-visual">🖨️</div>
+          <h2 id="printerName">No printer connected</h2>
+          <p>Printer connection will be handled by the PrintShop Print Agent.</p>
+          <div class="status-pill disconnected" id="printerStatus">⚪ Not connected</div>
+          <button class="primary-btn" id="pairBtn">🔐 Pair this computer</button>
+        </div>
+        <div class="panel">
+          <h3>Computer Permission</h3>
+          <p class="muted">Only an authorized shop computer should receive automatic print jobs.</p>
+          <div class="pair-code" id="pairCode">------</div>
+          <button class="secondary-btn full" id="newPairCode">Generate pairing code</button>
+          <p class="tiny">Demo pairing UI — backend authorization will be connected in the next stage.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="settings" class="section">
+      <div class="section-head">
+        <div><p class="eyebrow">SHOP SETTINGS</p><h2>Prices & Controls</h2></div>
+        <button class="primary-btn" id="saveSettings">Save Settings</button>
+      </div>
+      <div class="settings-grid">
+        <div class="panel">
+          <h3>Print Prices</h3>
+          <label class="field"><span>⚫ B/W — ₹ per page</span><input id="bwPrice" type="number" min="0" step="1" value="2"></label>
+          <label class="field"><span>🌈 Colour — ₹ per page</span><input id="colorPrice" type="number" min="0" step="1" value="10"></label>
+          <div class="notice">Changes are saved locally in this dashboard for now. Server-side pricing will be connected later.</div>
+        </div>
+        <div class="panel">
+          <h3>Shop Availability</h3>
+          <div class="availability-card">
+            <div><strong id="settingsStatus">🟢 Online</strong><p>Customers can place new orders.</p></div>
+            <button class="secondary-btn" id="settingsToggle">Turn Offline</button>
+          </div>
+          <h3 class="mt">Notifications</h3>
+          <label class="switch-row"><span>🔔 New order notifications</span><input id="notifyToggle" type="checkbox" checked></label>
+          <label class="switch-row"><span>💳 Payment notifications</span><input id="paymentNotifyToggle" type="checkbox" checked></label>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <div id="notificationPanel" class="notification-panel">
+    <div class="panel-head"><h3>Notifications</h3><button id="closeNotifications">✕</button></div>
+    <div id="notifications" class="notifications-empty">No new notifications</div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
